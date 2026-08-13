@@ -54,7 +54,7 @@ FreeGhost does not add RPCs or network events. While the local player is dead an
 ghost = target.Center - direction * spectateZoom + Vector3.up * 0.5
 ```
 
-The encoder subtracts PEAK 2.0's fixed world-up offset, analytically solves the remaining direction and distance for the desired world position, converts the direction through PEAK's own direction-to-look helper, and checks the immediately adjacent half-float yaw/pitch values. It decodes at most nine candidates and sends the finite candidate with the smallest error. The local player's real look values are never overwritten.
+The encoder subtracts PEAK 2.0's fixed world-up offset, analytically solves the direction for the desired world position, converts it through PEAK's own direction-to-look helper, and quantizes the look angles to their nearest half-float values. It then projects and quantizes the distance for that transmitted direction. The local player's real look values are never overwritten.
 
 Vanilla clients keep PEAK's original `Vector3.Lerp(..., 3 * deltaTime)` smoothing. Because both look angles and distance are half floats, error grows with distance, but remains small at the mod's ordinary 1 km radius. Unlike PEAK 1.x's rotated offset, PEAK 2.0's fixed world-up offset can be removed before solving, so close positions no longer need a special approximation.
 
@@ -113,7 +113,7 @@ FreeGhost 是 PEAK 的客户端 BepInEx Mod。童子军死亡并由原版生成 
 
 ### 原版客户端同步
 
-FreeGhost 不新增 RPC 或网络事件。Mod 只在本地角色死亡且自由模式活动时修改待序列化的 `CharacterSyncData` 副本，不覆盖玩家真实视角数据。编码器先减去 PEAK 2.0 固定的世界坐标向上偏移，再用解析公式反解原版 Ghost 位置，调用游戏自己的方向转换方法，并在转换结果相邻的 half-float yaw/pitch 中检查最多 9 个候选，最终发送回解误差最小的有限结果。
+FreeGhost 不新增 RPC 或网络事件。Mod 只在本地角色死亡且自由模式活动时修改待序列化的 `CharacterSyncData` 副本，不覆盖玩家真实视角数据。编码器先减去 PEAK 2.0 固定的世界坐标向上偏移，再用解析公式求出所需方向，调用游戏自己的方向转换方法，把视角量化到最近的 half-float 值，然后按量化后的实际发送方向重新投影并量化距离。
 
 未安装 Mod 的客户端继续使用原版 `Vector3.Lerp(..., 3 * deltaTime)` 平滑。视角和距离都是 half float，因此距离越远量化误差越大，但在默认 1 km 移动半径内通常很小。PEAK 2.0 将原来随视角旋转的偏移改成了固定的世界坐标 `Vector3.up * 0.5f`，因此编码前可以直接消除该偏移，近距离位置不再需要特殊近似。
 

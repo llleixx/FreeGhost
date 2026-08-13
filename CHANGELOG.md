@@ -14,6 +14,6 @@ All notable changes to FreeGhost are documented here.
 - Added a configurable shortcut for toggling between free movement and PEAK's vanilla spectate camera, plus configurable movement speeds.
 - Added a configurable free-flight radius centered on each free-mode entry position, defaulting to 1 km.
 - Added vanilla-client ghost position synchronization through existing `lookValues` and `spectateZoom` fields.
-- Added analytic position encoding, adjacent half-float candidate evaluation, finite-value validation, and safe fallback behavior.
+- Added analytic position encoding, nearest half-float quantization, finite-value validation, and safe fallback behavior.
 - Bundled runtime and coordinate code into a single `FreeGhost.dll` for installation.
 - Added automatic cleanup on revive, scene teardown, and feature disable.

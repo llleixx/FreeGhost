@@ -8,30 +8,6 @@ public static class HalfPrecision
 
     public static float Quantize(float value) => ToSingle(ToHalfBits(value));
 
-    public static float PreviousFinite(float value)
-    {
-        ushort bits = ToHalfBits(value);
-        if (!IsFiniteBits(bits))
-            return float.NaN;
-        if (bits == 0xfbff)
-            return -MaxFinite;
-        if (bits == 0 || bits == 0x8000)
-            return ToSingle(0x8001);
-        return ToSingle((ushort)(bits < 0x8000 ? bits - 1 : bits + 1));
-    }
-
-    public static float NextFinite(float value)
-    {
-        ushort bits = ToHalfBits(value);
-        if (!IsFiniteBits(bits))
-            return float.NaN;
-        if (bits == 0x7bff)
-            return MaxFinite;
-        if (bits == 0 || bits == 0x8000)
-            return ToSingle(0x0001);
-        return ToSingle((ushort)(bits < 0x8000 ? bits + 1 : bits - 1));
-    }
-
     public static ushort ToHalfBits(float value)
     {
         uint bits = unchecked((uint)BitConverter.SingleToInt32Bits(value));
@@ -122,6 +98,4 @@ public static class HalfPrecision
 
         return BitConverter.Int32BitsToSingle(unchecked((int)bits));
     }
-
-    private static bool IsFiniteBits(ushort value) => (value & 0x7c00) != 0x7c00;
 }

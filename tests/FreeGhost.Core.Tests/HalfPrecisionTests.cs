@@ -33,26 +33,4 @@ public sealed class HalfPrecisionTests
         Assert.That(float.IsNaN(HalfPrecision.Quantize(float.NaN)), Is.True);
     }
 
-    [TestCase(1f, 0.99951171875f, 1.0009765625f)]
-    [TestCase(-1f, -1.0009765625f, -0.99951171875f)]
-    [TestCase(0f, -0.000000059604645f, 0.000000059604645f)]
-    public void AdjacentFiniteValuesAreOrdered(float value, float expectedPrevious, float expectedNext)
-    {
-        Assert.That(HalfPrecision.PreviousFinite(value), Is.EqualTo(expectedPrevious));
-        Assert.That(HalfPrecision.NextFinite(value), Is.EqualTo(expectedNext));
-    }
-
-    [Test]
-    public void AdjacentFiniteValuesStayAtFiniteLimits()
-    {
-        Assert.That(HalfPrecision.PreviousFinite(-HalfPrecision.MaxFinite), Is.EqualTo(-HalfPrecision.MaxFinite));
-        Assert.That(HalfPrecision.NextFinite(HalfPrecision.MaxFinite), Is.EqualTo(HalfPrecision.MaxFinite));
-    }
-
-    [Test]
-    public void AdjacentFiniteValuesRejectNonFiniteInput()
-    {
-        Assert.That(float.IsNaN(HalfPrecision.PreviousFinite(float.PositiveInfinity)), Is.True);
-        Assert.That(float.IsNaN(HalfPrecision.NextFinite(float.NaN)), Is.True);
-    }
 }

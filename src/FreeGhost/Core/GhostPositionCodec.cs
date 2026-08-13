@@ -28,7 +28,7 @@ public static class GhostPositionCodec
         return IsFinite(direction);
     }
 
-    public static bool TryEncodeAroundLook(
+    public static bool TryEncodeLook(
         Vector3 targetCenter,
         Vector3 desiredPosition,
         Vector2 seedLook,
@@ -42,39 +42,8 @@ public static class GhostPositionCodec
         if (previousLook.HasValue)
             seedLook.X = UnwrapYaw(seedLook.X, previousLook.Value.X);
 
-        Vector2 center = new(HalfPrecision.Quantize(seedLook.X), HalfPrecision.Quantize(seedLook.Y));
-        if (!IsFinite(center))
-            return false;
-
-        float[] yaws = { center.X, HalfPrecision.PreviousFinite(center.X), HalfPrecision.NextFinite(center.X) };
-        float[] pitches = { center.Y, HalfPrecision.PreviousFinite(center.Y), HalfPrecision.NextFinite(center.Y) };
-        bool found = false;
-        GhostEncoding best = default;
-
-        foreach (float yaw in yaws)
-        {
-            foreach (float rawPitch in pitches)
-            {
-                float pitch = MathF.Max(-90f, MathF.Min(90f, rawPitch));
-                if (!TryEvaluateQuantizedLook(
-                        targetCenter,
-                        desiredPosition,
-                        new Vector2(yaw, pitch),
-                        out GhostEncoding candidate))
-                {
-                    continue;
-                }
-
-                if (!found || candidate.Error < best.Error)
-                {
-                    found = true;
-                    best = candidate;
-                }
-            }
-        }
-
-        encoding = best;
-        return found;
+        seedLook.Y = MathF.Max(-90f, MathF.Min(90f, seedLook.Y));
+        return TryEvaluateQuantizedLook(targetCenter, desiredPosition, seedLook, out encoding);
     }
 
     public static Vector3 Decode(Vector3 targetCenter, Vector2 lookValues, float zoom)

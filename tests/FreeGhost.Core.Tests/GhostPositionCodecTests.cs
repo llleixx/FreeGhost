@@ -82,7 +82,7 @@ public sealed class GhostPositionCodecTests
         Assert.That(GhostPositionCodec.TrySolveDirection(Vector3.Zero, desired, out Vector3 direction), Is.True);
         Vector2 look = GhostPositionCodec.DirectionToLook(direction);
 
-        Assert.That(GhostPositionCodec.TryEncodeAroundLook(Vector3.Zero, desired, look, null, out _), Is.False);
+        Assert.That(GhostPositionCodec.TryEncodeLook(Vector3.Zero, desired, look, null, out _), Is.False);
     }
 
     [Test]
@@ -90,7 +90,7 @@ public sealed class GhostPositionCodecTests
     {
         Assert.That(GhostPositionCodec.TrySolveDirection(new Vector3(float.NaN, 0f, 0f), Vector3.Zero, out _), Is.False);
         Assert.That(GhostPositionCodec.TrySolveDirection(Vector3.Zero, new Vector3(float.PositiveInfinity, 0f, 0f), out _), Is.False);
-        Assert.That(GhostPositionCodec.TryEncodeAroundLook(Vector3.Zero, Vector3.One, new Vector2(float.NaN, 0f), null, out _), Is.False);
+        Assert.That(GhostPositionCodec.TryEncodeLook(Vector3.Zero, Vector3.One, new Vector2(float.NaN, 0f), null, out _), Is.False);
     }
 
     [Test]
@@ -135,7 +135,7 @@ public sealed class GhostPositionCodecTests
     }
 
     [Test]
-    public void HalfNeighborhoodIsNoWorseThanQuantizedDirectSeed()
+    public void EncodingUsesNearestHalfLookAndProjectedDistance()
     {
         Random random = new(0x46524748);
         for (int i = 0; i < 1000; i++)
@@ -144,21 +144,17 @@ public sealed class GhostPositionCodecTests
             Vector3 desired = center + RandomVector(random, 1000f);
             Assert.That(GhostPositionCodec.TrySolveDirection(center, desired, out Vector3 direction), Is.True);
             Vector2 seed = GhostPositionCodec.DirectionToLook(direction);
-            Assert.That(GhostPositionCodec.TryEncodeAroundLook(center, desired, seed, null, out GhostEncoding optimized), Is.True);
+            Assert.That(GhostPositionCodec.TryEncodeLook(center, desired, seed, null, out GhostEncoding encoded), Is.True);
 
-            float centerError = EvaluateCenterError(center, desired, seed);
-            Assert.That(optimized.Error, Is.LessThanOrEqualTo(centerError + 1e-4f), $"sample {i}");
-            AssertFinite(optimized);
+            Vector2 expectedLook = new(HalfPrecision.Quantize(seed.X), HalfPrecision.Quantize(seed.Y));
+            Vector3 quantizedDirection = GhostPositionCodec.DirectionFromLook(expectedLook);
+            Vector3 travel = desired - center - Vector3.UnitY * GhostPositionCodec.GhostUpOffset;
+            float expectedZoom = HalfPrecision.Quantize(MathF.Max(0f, -Vector3.Dot(travel, quantizedDirection)));
+
+            Assert.That(encoded.LookValues, Is.EqualTo(expectedLook), $"look sample {i}");
+            Assert.That(encoded.Zoom, Is.EqualTo(expectedZoom), $"zoom sample {i}");
+            AssertFinite(encoded);
         }
-    }
-
-    private static float EvaluateCenterError(Vector3 center, Vector3 desired, Vector2 look)
-    {
-        Vector2 quantized = new(HalfPrecision.Quantize(look.X), HalfPrecision.Quantize(look.Y));
-        Vector3 direction = GhostPositionCodec.DirectionFromLook(quantized);
-        Vector3 travel = desired - center - Vector3.UnitY * GhostPositionCodec.GhostUpOffset;
-        float zoom = HalfPrecision.Quantize(MathF.Max(0f, -Vector3.Dot(travel, direction)));
-        return Vector3.Distance(GhostPositionCodec.Decode(center, quantized, zoom), desired);
     }
 
     private static Vector3 RandomVector(Random random, float extent)
@@ -176,7 +172,7 @@ public sealed class GhostPositionCodecTests
         Assert.That(GhostPositionCodec.TrySolveDirection(center, desired, out Vector3 direction), Is.True);
         Vector2 gameLook = GhostPositionCodec.DirectionToLook(direction);
         Assert.That(
-            GhostPositionCodec.TryEncodeAroundLook(center, desired, gameLook, previousLook, out encoding),
+            GhostPositionCodec.TryEncodeLook(center, desired, gameLook, previousLook, out encoding),
             Is.True);
     }
 

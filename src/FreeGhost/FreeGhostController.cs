@@ -174,7 +174,7 @@ internal sealed class FreeGhostController
             Vector3 gameLook = _directionToLook(ToUnity(direction));
             CoreVector2 finalLook = new(gameLook.x, gameLook.y);
 
-            if (!GhostPositionCodec.TryEncodeAroundLook(center, desired, finalLook, previous, out GhostEncoding encoded))
+            if (!GhostPositionCodec.TryEncodeLook(center, desired, finalLook, previous, out GhostEncoding encoded))
             {
                 SyncFailedOnce("PEAK's direction-to-look conversion produced an unsafe result.");
                 RestoreSafeOriginal(ref data, original);
