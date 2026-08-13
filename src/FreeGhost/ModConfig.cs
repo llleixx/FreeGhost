@@ -44,8 +44,8 @@ internal sealed class ModConfig
         ModeToggleShortcut = config.Bind(
             "Movement",
             "ModeToggleShortcut",
-            new KeyboardShortcut(KeyCode.R),
-            "Toggle between free ghost movement and PEAK's vanilla spectate camera.");
+            KeyCode.R,
+            "Key used to toggle between free ghost movement and PEAK's vanilla spectate camera.");
 
         SyncToVanillaClients = config.Bind(
             "Networking",
@@ -58,7 +58,7 @@ internal sealed class ModConfig
     public ConfigEntry<float> BaseSpeed { get; }
     public ConfigEntry<float> SprintMultiplier { get; }
     public ConfigEntry<float> MaxDistance { get; }
-    public ConfigEntry<KeyboardShortcut> ModeToggleShortcut { get; }
+    public ConfigEntry<KeyCode> ModeToggleShortcut { get; }
     public ConfigEntry<bool> SyncToVanillaClients { get; }
 
     public float SafeBaseSpeed => SafeRange(BaseSpeed.Value, 0.1f, 1000f, DefaultBaseSpeed);

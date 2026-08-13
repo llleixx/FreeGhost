@@ -94,7 +94,7 @@ internal sealed class FreeGhostController
 
         GUIManager? gui = GUIManager.instance;
         bool inputAllowed = Time.timeScale > 0f && gui != null && !gui.windowBlockingInput && !gui.wheelActive;
-        if (inputAllowed && _config.ModeToggleShortcut.Value.IsDown())
+        if (inputAllowed && Input.GetKeyDown(_config.ModeToggleShortcut.Value))
         {
             if (_freeModeActive)
             {

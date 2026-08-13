@@ -45,7 +45,7 @@ The config file is generated at `BepInEx/config/com.github.lllei.FreeGhost.cfg`.
 | `Movement.BaseSpeed` | `8.0` | `0.1` to `1000` m/s |
 | `Movement.SprintMultiplier` | `2.5` | `1` to `20` |
 | `Movement.MaxDistance` | `1000` | `10` to `10000` m |
-| `Movement.ModeToggleShortcut` | `R` | BepInEx keyboard shortcut |
+| `Movement.ModeToggleShortcut` | `R` | keyboard key |
 | `Networking.SyncToVanillaClients` | `true` | boolean |
 
 Invalid numeric values are clamped or replaced with safe defaults at runtime.
