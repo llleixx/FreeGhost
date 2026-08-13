@@ -54,8 +54,6 @@ Invalid numeric values are clamped or replaced with safe defaults at runtime.
 
 Only the player using FreeGhost needs to install it. Other players can see the moving Ghost without installing the mod, and FreeGhost does not add custom network messages.
 
-Ghost position synchronization reuses data that PEAK normally sends for dead players. In unusual situations, this can affect whether a Scoutmaster considers your dead character to be looking at it, or conflict with another mod that reads the same data. Disable `Networking.SyncToVanillaClients` if this causes a problem; local free flight will continue to work.
-
 ### Building
 
 Copy `PeakGameDir.props.example` to the gitignored `PeakGameDir.props` and set the PEAK directory, or set `PEAK_GAME_DIR`.
@@ -110,8 +108,6 @@ FreeGhost 会在你死亡后把 PEAK 的 Ghost 变成第一人称自由飞行模
 ### 兼容性说明
 
 只有使用者需要安装 FreeGhost。其他玩家无需安装也能看到移动的 Ghost，并且 FreeGhost 不会添加自定义网络消息。
-
-Ghost 位置同步会复用 PEAK 原本为死亡玩家发送的数据。在少数情况下，这可能影响 Scoutmaster 是否认为死亡角色正看着它，或者与读取同一数据的其他 Mod 发生冲突。遇到问题时可以关闭 `Networking.SyncToVanillaClients`，本地自由飞行仍会正常工作。
 
 ### 构建
 
