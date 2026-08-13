@@ -2,6 +2,8 @@
 
 [English](#english) | [中文](#中文)
 
+![FreeGhost gameplay demo](https://raw.githubusercontent.com/llleixx/FreeGhost/main/docs/media/free-ghost-demo.gif)
+
 ## English
 
 FreeGhost turns PEAK's Ghost into a first-person free-flight mode after you die, while remaining fully client-side.
