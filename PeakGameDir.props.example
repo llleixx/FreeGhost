@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <!-- Copy this file to PeakGameDir.props and update the path. The copied file is gitignored. -->
+    <PeakGameDir>C:\Program Files (x86)\Steam\steamapps\common\PEAK</PeakGameDir>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,26 @@
+# Build and test output
+**/bin/
+**/obj/
+artifacts/
+TestResults/
+coverage/
+*.trx
+
+# Local IDE state
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# Local PEAK installation path
+PeakGameDir.props
+
+# Private development and release notes
+COORDINATE_ENCODING.md
+FreeGhost.md
+THUNDERSTORE.md
+
+# OS-generated files
+.DS_Store
+Thumbs.db
