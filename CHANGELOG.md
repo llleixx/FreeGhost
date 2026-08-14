@@ -4,6 +4,10 @@ All notable changes to FreeGhost are documented here.
 
 ## Unreleased
 
+## 1.0.1 - 2026-08-14
+
+- Updated the required BepInExPack_PEAK dependency to 5.4.75301.
+
 ## 1.0.0 - 2026-08-13
 
 - Updated the PEAK compatibility baseline to 2.0.a (Steam build 24676019).
