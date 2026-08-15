@@ -26,7 +26,7 @@ internal sealed class ModConfig
         DefaultMode = config.Bind(
             "General",
             "DefaultMode",
-            GhostMode.Free,
+            GhostMode.Normal,
             "Mode entered when a new ghost session starts. Free enables free flight; Normal keeps PEAK's vanilla spectate camera.");
 
         BaseSpeed = config.Bind(
