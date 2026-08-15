@@ -2,6 +2,8 @@
 
 [English](#english) | [中文](#中文)
 
+Recommended companion mod / 推荐搭配使用：[EnhancedPing](https://thunderstore.io/c/peak/p/lllei/EnhancedPing/)
+
 ![FreeGhost gameplay demo](https://raw.githubusercontent.com/llleixx/FreeGhost/main/docs/media/free-ghost-demo.gif)
 
 ## English
@@ -33,7 +35,7 @@ Install with Thunderstore Mod Manager or r2modman, or place `FreeGhost.dll` dire
 
 Movement follows the camera's horizontal direction. Looking up or down does not change the movement plane; use Jump and Crouch to control altitude. Your in-game keyboard, mouse, and controller bindings continue to work.
 
-Each Ghost session starts in free-flight mode. Press the toggle shortcut to return to PEAK's normal spectate camera without changing the current target. Press it again to resume free flight from the current camera position.
+By default, each Ghost session starts in free-flight mode. Set `General.DefaultMode` to `Normal` to start with PEAK's normal spectate camera instead. In either case, press the toggle shortcut to switch modes without changing the current spectate target; entering free flight resumes from the current camera position.
 
 Free flight is limited to a configurable radius around the position where you entered the mode. The default radius is 1 km. Movement and mode switching pause while a menu is open, the game is paused, or player input is otherwise blocked.
 
@@ -44,6 +46,7 @@ The config file is generated at `BepInEx/config/com.github.lllei.FreeGhost.cfg`.
 | Key | Default | Allowed range |
 |---|---:|---:|
 | `General.Enabled` | `true` | boolean |
+| `General.DefaultMode` | `Free` | `Free` or `Normal` |
 | `Movement.BaseSpeed` | `8.0` | `0.1` to `1000` m/s |
 | `Movement.SprintMultiplier` | `2.5` | `1` to `20` |
 | `Movement.MaxDistance` | `1000` | `10` to `10000` m |
@@ -99,13 +102,13 @@ FreeGhost 会在你死亡后把 PEAK 的 Ghost 变成第一人称自由飞行模
 
 前后左右沿相机朝向的水平面移动；俯视和仰视不会改变移动平面，使用跳跃和蹲下来控制高度。重新绑定后的键盘、鼠标和手柄输入均可正常使用。
 
-每次生成 Ghost 后会默认进入自由飞行。按下切换键会返回 PEAK 原版观战相机，并保留当前观战目标；再次按下时，会从当前相机位置继续自由飞行。
+每次生成 Ghost 后默认进入自由飞行。将 `General.DefaultMode` 设为 `Normal` 后，则会默认进入 PEAK 原版观战模式。无论默认模式是哪一种，都可以按下切换键在两种模式之间切换，并保留当前观战目标；进入自由飞行时，会从当前相机位置开始移动。
 
 自由飞行范围以每次进入该模式时的位置为中心，默认半径为 1 km，可以在配置中修改。菜单打开、游戏暂停或玩家输入被阻止时，移动和模式切换会暂停。
 
 ### 配置
 
-配置文件生成于 `BepInEx/config/com.github.lllei.FreeGhost.cfg`，各配置键、默认值和范围见英文表格。非法数值会在运行时钳制或回退到安全值。
+配置文件生成于 `BepInEx/config/com.github.lllei.FreeGhost.cfg`。通过 `General.DefaultMode` 可以选择死亡后默认进入 `Free`（自由飞行）或 `Normal`（原版观战）模式；其他配置键、默认值和范围见英文表格。非法数值会在运行时钳制或回退到安全值。
 
 ### 兼容性说明
 

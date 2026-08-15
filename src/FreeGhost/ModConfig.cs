@@ -3,6 +3,12 @@ using UnityEngine;
 
 namespace FreeGhost;
 
+internal enum GhostMode
+{
+    Free,
+    Normal
+}
+
 internal sealed class ModConfig
 {
     private const float DefaultBaseSpeed = 8f;
@@ -16,6 +22,12 @@ internal sealed class ModConfig
             "Enabled",
             true,
             "Enable first-person free ghost mode after the local scout dies.");
+
+        DefaultMode = config.Bind(
+            "General",
+            "DefaultMode",
+            GhostMode.Free,
+            "Mode entered when a new ghost session starts. Free enables free flight; Normal keeps PEAK's vanilla spectate camera.");
 
         BaseSpeed = config.Bind(
             "Movement",
@@ -55,6 +67,7 @@ internal sealed class ModConfig
     }
 
     public ConfigEntry<bool> Enabled { get; }
+    public ConfigEntry<GhostMode> DefaultMode { get; }
     public ConfigEntry<float> BaseSpeed { get; }
     public ConfigEntry<float> SprintMultiplier { get; }
     public ConfigEntry<float> MaxDistance { get; }

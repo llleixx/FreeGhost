@@ -1,6 +1,6 @@
 {
   "name": "FreeGhost",
-  "version_number": "1.0.1",
+  "version_number": "1.1.0",
   "website_url": "https://github.com/llleixx/FreeGhost",
   "description": "First-person free-flight ghost mode with vanilla-client position synchronization.",
   "dependencies": [

@@ -4,6 +4,10 @@ All notable changes to FreeGhost are documented here.
 
 ## Unreleased
 
+## 1.1.0 - 2026-08-15
+
+- Added `General.DefaultMode` to choose whether each Ghost session starts in free-flight or normal spectate mode.
+
 ## 1.0.1 - 2026-08-14
 
 - Updated the required BepInExPack_PEAK dependency to 5.4.75301.

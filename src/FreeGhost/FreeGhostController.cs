@@ -87,9 +87,20 @@ internal sealed class FreeGhostController
 
         if (!_sessionActive)
         {
-            if (!EnterFreeMode(cameraMovement.transform, "ghost session started"))
-                return;
             _sessionActive = true;
+
+            if (_config.DefaultMode.Value == GhostMode.Free)
+            {
+                if (!EnterFreeMode(cameraMovement.transform, "ghost session started"))
+                {
+                    _sessionActive = false;
+                    return;
+                }
+            }
+            else
+            {
+                _logger.LogDebug("Ghost session started in PEAK's vanilla spectate mode.");
+            }
         }
 
         GUIManager? gui = GUIManager.instance;
