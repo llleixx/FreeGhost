@@ -1,5 +1,8 @@
 # FreeGhost
 
+[![GitHub Repo](https://img.shields.io/badge/GitHub-llleixx%2FFreeGhost-black?logo=github)](https://github.com/llleixx/FreeGhost)
+[![Thunderstore Downloads](https://img.shields.io/thunderstore/dt/lllei/FreeGhost?logo=thunderstore&label=Downloads)](https://thunderstore.io/c/peak/p/lllei/FreeGhost/)
+
 [English](#english) | [中文](#中文)
 
 Recommended companion mod / 推荐搭配使用：[EnhancedPing](https://thunderstore.io/c/peak/p/lllei/EnhancedPing/)
